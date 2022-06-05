@@ -17,6 +17,44 @@
                 }
             )
             document.body.appendChild(app.view);
+
+            //  preload assets
+            app.loader.baseUrl = 'images';
+            app.loader
+                .add('sprite01', 'Bloat01.png')
+                .add('sprite02', 'Bloat02.png')
+                .add('sprite03', 'Bloat03.png')
+                .add('sprite04', 'Bloat04.png')
+                .add('sprite05', 'Bloat05.png')
+                .add('sprite06', 'Bloat06.png')
+                .add('sprite07', 'Bloat07.png')
+                .add('sprite08', 'Bloat08.png')
+                .add('sprite09', 'Bloat09.png')
+                .add('sprite10', 'Bloat10.png')
+                .add('player', 'player.png');
+
+            app.loader.onProgress.add(showProgress);
+            app.loader.onComplete.add(doneLoading);
+            app.loader.onError.add(reportError);
+            app.loader.load();
+        }
+
+        function showProgress(e){
+            console.log(e.progress);
+        }
+
+        function reportError(e){
+            console.error('ERROR ' + e.message );
+        }
+
+        function doneLoading(e){
+            console.log('DONE LOADING');
+
+            player = PIXI.Sprite.from(app.loader.resources.player.texture);
+            player.x = app.view.width / 2;
+            player.y = app.view.height / 2;
+            player.anchor.set(0.5);
+            app.stage.addChild(player);
         }
     </script>
 </head>
@@ -24,3 +62,5 @@
 
 </body>
 </html>
+
+
