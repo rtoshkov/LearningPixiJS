@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="../js/pixi.min.js"></script>
+    <script>
+        let app;
+        let player;
+        let keys = {}
+        let keysDiv;
+        let keyboard = {
+            'A': '65',
+            'W': '87',
+            'S': '83',
+            'D': '68',
+        }
+
+        window.onload = function(){
+            app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0xAAAAAA,
+                }
+            )
+            document.body.appendChild(app.view);
+
+            // player object
+            player = new PIXI.Sprite.from('../images/player.png');
+            player.anchor.set(0.5);
+            player.x = app.view.width / 2;
+            player.y = app.view.height / 2;
+
+            app.stage.addChild(player);
+
+        //     // mouse interactions
+        //
+        //     app.stage.interactive = true;
+        //     app.stage.on('pointermove', movePlayer);
+        // }
+        //
+        // function movePlayer(e){
+        //     let pos = e.data.global;
+        //
+        //     player.x = pos.x;
+        //     player.y = pos.y;
+        // }
+
+
+        //  keyboard event handler
+        window.addEventListener('keydown', keysDown);
+        window.addEventListener('keyup', keysUp);
+
+        app.ticker.add(gameLoop);
+        keysDiv = document.querySelector('#keys');
+
+        function keysDown(e){
+            keys[e.keyCode] = true;
+        }}
+
+        function keysUp(e){
+            keys[e.keyCode] = false;
+        }
+
+        function gameLoop(){
+            // keysDiv.innerText = JSON.stringify(keys);
+            if (keys[keyboard['A']]){
+                player.x += -2;
+            }
+            if (keys[keyboard['W']]){
+                player.y += -2;
+            }
+            if (keys[keyboard['S']]){
+                player.y += 2;
+            }
+            if (keys[keyboard['D']]){
+                player.x += 2;
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+<div id="keys"></div>
+</body>
+</html>
